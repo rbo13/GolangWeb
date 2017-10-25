@@ -31,6 +31,7 @@ func (s shop) handleShop(w http.ResponseWriter, r *http.Request) {
 	} else {
 		categories := model.GetCategories()
 		vm := viewmodel.NewShop(categories)
+		w.Header().Add("Content-Type", "text/html")
 		s.shopTemplate.Execute(w, vm)
 	}
 }
@@ -52,6 +53,7 @@ func (s shop) handleProduct(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		vm := viewmodel.NewProduct(product)
+		w.Header().Add("Content-Type", "text/html")
 		s.productTemplate.Execute(w, vm)
 
 	} else {
