@@ -12,26 +12,34 @@ type GzipMiddleware struct {
 }
 
 func (gm *GzipMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-
 	if gm.Next == nil {
 		gm.Next = http.DefaultServeMux
 	}
 
 	encodings := r.Header.Get("Accept-Encoding")
-
 	if !strings.Contains(encodings, "gzip") {
 		gm.Next.ServeHTTP(w, r)
 		return
 	}
-
 	w.Header().Add("Content-Encoding", "gzip")
-	gzipwriter := gzip.NewWriter(w)
-	defer gzipwriter.Close()
-	grw := gzipResponseWriter{
-		ResponseWriter: w,
-		Writer:         gzipwriter,
+	gzipWriter := gzip.NewWriter(w)
+	defer gzipWriter.Close()
+	var rw http.ResponseWriter
+	if pusher, ok := w.(http.Pusher); ok {
+		rw = gzipPusherResponseWriter{
+			gzipResponseWriter: gzipResponseWriter{
+				ResponseWriter: w,
+				Writer:         gzipWriter,
+			},
+			Pusher: pusher,
+		}
+	} else {
+		rw = gzipResponseWriter{
+			ResponseWriter: w,
+			Writer:         gzipWriter,
+		}
 	}
-	gm.Next.ServeHTTP(grw, r)
+	gm.Next.ServeHTTP(rw, r)
 }
 
 type gzipResponseWriter struct {
@@ -39,7 +47,11 @@ type gzipResponseWriter struct {
 	io.Writer
 }
 
-func (grw gzipResponseWriter) Write(data []byte) (int, error) {
+type gzipPusherResponseWriter struct {
+	gzipResponseWriter
+	http.Pusher
+}
 
+func (grw gzipResponseWriter) Write(data []byte) (int, error) {
 	return grw.Writer.Write(data)
 }
