@@ -14,6 +14,7 @@ Golang Web is my sample web app written in Go. This is a server side rendered go
   - Golang
   - MySQL
   - Unit Testing (Go Built-in test)
+  - Performance Profiling
 
 ### Tests
 Please see each directory prefixed with `_test`.
