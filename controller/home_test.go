@@ -21,7 +21,7 @@ func TestLoginExecutesCorrectTemplate(t *testing.T) {
 
 	actual, _ := ioutil.ReadAll(w.Result().Body)
 
-	if string(actual) != expected+"foo" {
+	if string(actual) != expected {
 		t.Errorf("Failed  execute correct template")
 	}
 }
