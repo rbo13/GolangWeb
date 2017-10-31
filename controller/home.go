@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/lss/viewmodel"
 )
@@ -23,6 +24,7 @@ func (h home) registerRoutes() {
 func (h home) handleHome(w http.ResponseWriter, r *http.Request) {
 	vm := viewmodel.NewHome()
 	w.Header().Add("Content-Type", "text/html")
+	time.Sleep(4 * time.Second)
 	h.homeTemplate.Execute(w, vm)
 }
 
