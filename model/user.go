@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -40,6 +41,15 @@ func Login(email, password string) (*User, error) {
 	case err != nil:
 		return nil, err
 	}
+
+	t := time.Now()
+	stmt, updateErr := db.Prepare(`UPDATE user SET lastlogin = ? WHERE id = ?`)
+
+	if updateErr != nil {
+		log.Printf("Failed to update login time for user: %v to %v: %v", result.Email, t, updateErr)
+	}
+
+	stmt.Exec(t, result.ID)
 
 	return result, nil
 }
