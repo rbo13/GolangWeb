@@ -1,19 +1,35 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"html/template"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/lss/controller"
 	"github.com/lss/middleware"
+	"github.com/lss/model"
 )
 
 func main() {
 	templates := populateTemplates()
+	db := connectToDatabase()
+	defer db.Close()
 	controller.Startup(templates)
 	http.ListenAndServe(":8000", &middleware.TimeoutMiddleware{new(middleware.GzipMiddleware)})
+}
+
+func connectToDatabase() *sql.DB {
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/lss?charset=utf8")
+	if err != nil {
+		log.Fatalln(fmt.Errorf("Unable to connect to database: %v", err))
+	}
+	model.SetDatabase(db)
+	return db
 }
 
 func populateTemplates() map[string]*template.Template {
