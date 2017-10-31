@@ -13,10 +13,10 @@ Golang Web is my sample web app written in Go. This is a server side rendered go
 ### Tech
   - Golang
   - MySQL
-  - 
+  - Unit Testing (Go Built-in test)
 
 ### Tests
-Please see tests/ directory.
+Please see each directory prefixed with `_test`.
 
 ### Installation
 
