@@ -15,6 +15,8 @@ Golang Web is my sample web app written in Go. This is a server side rendered go
   - MySQL
   - Unit Testing (Go Built-in test)
   - Performance Profiling
+    * go tool pprof http://localhost:8000/debug/pprof/heap //memory
+    * go tool pprof http://localhost:8000/debug/pprof/profile //cpu
 
 ### Tests
 Please see each directory prefixed with `_test`.
