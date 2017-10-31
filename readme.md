@@ -14,7 +14,7 @@ Golang Web is my sample web app written in Go. This is a server side rendered go
   - Golang
   - MySQL
   - 
-  
+
 ### Tests
 Please see tests/ directory.
 
@@ -26,7 +26,7 @@ Clone this repo to your workspace.
 
 ```sh
 $ cd src/github.com/lss
-$ npm install
+$ npm install (yes, some of my assets are built with node)
 $ go run main.go
 ```
 
