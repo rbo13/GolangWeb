@@ -17,6 +17,9 @@ Golang Web is my sample web app written in Go. This is a server side rendered go
   - Performance Profiling:
     * go tool pprof http://localhost:8000/debug/pprof/heap //memory
     * go tool pprof http://localhost:8000/debug/pprof/profile //cpu
+    * go tool pprof http://localhost:8000/debug/pprof/block //goroutines
+    * go tool pprof http://localhost:8000/debug/pprof/trace?seconds=5 //trace
+    * go tool pprof http://localhost:8000/debug/pprof //Web Interface
 
 ### Tests
 Please see each directory prefixed with `_test`.
