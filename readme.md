@@ -22,7 +22,9 @@ Golang Web is my sample web app written in Go. This is a server side rendered go
     * go tool pprof http://localhost:8000/debug/pprof //Web Interface
 
 ### Tests
-Please see each directory prefixed with `_test`.
+- Please see each directory prefixed with `_test`.
+    * Running Tests:
+        * `go test github.com/lss/controller` / (where the test file is located) 
 
 ### Installation
 
